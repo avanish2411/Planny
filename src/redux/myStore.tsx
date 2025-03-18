@@ -5,7 +5,6 @@ import ExpenseSlice from "./slices/ExpenseSlice";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
-
 const rootReducer = combineReducers({
     users: UserSlice,
     todos: TodoSlice,
