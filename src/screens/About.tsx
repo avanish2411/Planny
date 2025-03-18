@@ -1,16 +1,18 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Image, ScrollView, Linking } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/myStore'
-import Icon from 'react-native-vector-icons/Octicons'
+
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../navigation/RootNavigation'
 import { Divider, Switch } from 'react-native-paper'
+import { clearUser, setUser } from '../redux/slices/UserSlice'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-type AboutScreenNavigationProp = StackNavigationProp<RootStackParamList, 'EditDetails'>
+type AboutScreenNavigationProp = StackNavigationProp<RootStackParamList, 'EditDetails' | 'AuthStack'>
 
 const About = () => {
   const navigation = useNavigation<AboutScreenNavigationProp>()
@@ -18,16 +20,7 @@ const About = () => {
   const user = useSelector((state: RootState) => state.users.user)
   const [isDarkMode, setIsDarkMode] = React.useState(false)
   const toggleTheme = () => setIsDarkMode(!isDarkMode)
-
-  const theme = {
-    background: isDarkMode ? '#121212' : '#FFFFFF',
-    text: isDarkMode ? '#FFFFFF' : '#000000',
-    subText: isDarkMode ? '#AAAAAA' : '#777777',
-    divider: isDarkMode ? '#333333' : '#DDDDDD',
-    primary: '#4DA6FF',
-    card: isDarkMode ? '#222222' : '#F5F5F5',
-    headerOpacity: isDarkMode ? 0.7 : 0.9,
-  }
+  const dispatch = useDispatch()
 
   const openXAccount = () => {
     const xUsername = 'IamAvanish24'
@@ -36,23 +29,32 @@ const About = () => {
   }
   const openDiscordAccount = () => {
     const Username = '_.avanish._'
-    const ProfileUrl = `https://x.com/${Username}`
+    const ProfileUrl = `https://discord.com/invite/${Username}`
     Linking.openURL(ProfileUrl).catch(err => console.error('Error opening X profile:', err))
   }
+  const SignOut = async () => {
+    try {
+      await AsyncStorage.removeItem('persist:root');
+      dispatch(clearUser());
+      navigation.navigate('AuthStack')
+    } catch (error) {
+      console.error('Error clearing AsyncStorage:', error);
+    }
+  };
 
   const menuItems = [
     { title: 'Theme', icon: 'theme-light-dark', hasSwitch: true },
     { title: 'Join on X', icon: 'twitter', action: openXAccount },
-    { title: 'Join on Discord', icon: 'discord', action: openDiscordAccount},
+    { title: 'Join on Discord ', icon: 'discord', action: openDiscordAccount },
     { title: 'Contact Support via Email', icon: 'email-outline', action: () => console.log('Email pressed') },
   ]
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: theme.background }}>
-      <View style={{ alignItems: 'center', marginTop: insets.top+50, paddingHorizontal: 16 }}>
+    <ScrollView style={{ flex: 1, }}>
+      <View style={{ alignItems: 'center', marginTop: insets.top + 50, paddingHorizontal: 16 }}>
         <View>
           <Image
-            source={require('../assets/Images/boy.png')}
+            source={require('../assets/boy.png')}
             style={{
               height: 100,
               width: 100,
@@ -63,10 +65,10 @@ const About = () => {
           />
         </View>
         <View style={{ alignItems: 'center', marginTop: 12 }}>
-          <Text style={{ fontSize: 24, fontWeight: '600', color: theme.text }}>
+          <Text style={{ fontSize: 24, fontWeight: '600' }}>
             {user?.name || 'User Name'}
           </Text>
-          <Text style={{ fontSize: 16, marginTop: 4, color: theme.subText }}>
+          <Text style={{ fontSize: 16, marginTop: 4, }}>
             {user?.email || 'user@example.com'}
           </Text>
         </View>
@@ -76,7 +78,7 @@ const About = () => {
             paddingHorizontal: 20,
             paddingVertical: 8,
             borderRadius: 20,
-            backgroundColor: theme.primary,
+            backgroundColor: '#4DA6FF'  
           }}
           onPress={() => navigation.navigate('EditDetails')}
         >
@@ -89,7 +91,6 @@ const About = () => {
         marginHorizontal: 16,
         borderRadius: 12,
         overflow: 'hidden',
-        backgroundColor: theme.card,
       }}>
         {menuItems.map((item, index) => (
           <View key={index}>
@@ -100,32 +101,33 @@ const About = () => {
                 justifyContent: 'space-between',
                 paddingVertical: 16,
                 paddingHorizontal: 16,
+                width: '100%',
+                backgroundColor: '#fff'
               }}
               disabled={item.hasSwitch}
               onPress={item.action}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <MaterialIcon name={item.icon} size={24} color={theme.primary} style={{ marginRight: 16 }} />
-                <Text style={{ fontSize: 16, color: theme.text }}>{item.title}</Text>
+                <MaterialIcon name={item.icon} size={24} style={{ marginRight: 16 }} />
+                <Text style={{ fontSize: 16, }}>{item.title}</Text>
               </View>
               {item.hasSwitch ? (
                 <Switch
                   value={isDarkMode}
                   onValueChange={toggleTheme}
-                  color={theme.primary}
                 />
               ) : (
-                <MaterialIcon name="chevron-right" size={24} color={theme.subText} />
+                <MaterialIcon name="chevron-right" size={24} />
               )}
             </TouchableOpacity>
             {index < menuItems.length - 1 && (
-              <Divider style={{ height: 1, marginLeft: 56, backgroundColor: theme.divider }} />
+              <Divider style={{ height: 1, marginLeft: 56, }} />
             )}
           </View>
         ))}
       </View>
 
-      <TouchableOpacity 
+      <TouchableOpacity
         style={{
           marginTop: 24,
           marginHorizontal: 16,
@@ -133,17 +135,16 @@ const About = () => {
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: 24,
-          backgroundColor: theme.primary,
+          backgroundColor:'#4DA6FF'
         }}
-        onPress={() => console.log('Logout pressed')}
+        onPress={() => SignOut()}
       >
         <Text style={{ color: 'white', fontWeight: '500', fontSize: 16 }}>Logout</Text>
       </TouchableOpacity>
-      
-      <Text style={{ textAlign: 'center', marginTop: 16, fontSize: 12, color: theme.subText }}>
+
+      <Text style={{ textAlign: 'center', marginTop: 16, fontSize: 12, }}>
         Version 0.0.1
       </Text>
-      
       <View style={{ height: insets.bottom + 20 }} />
     </ScrollView>
   )

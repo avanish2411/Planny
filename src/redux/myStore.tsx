@@ -4,11 +4,15 @@ import TodoSlice from "./slices/TodoSlice";
 import ExpenseSlice from "./slices/ExpenseSlice";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistReducer, persistStore } from 'redux-persist';
+import NoteSlice from "./slices/NoteSlice";
+import ThemeSlice from "./slices/ThemeSlice";
 
 const rootReducer = combineReducers({
     users: UserSlice,
     todos: TodoSlice,
-    expenses: ExpenseSlice
+    expenses: ExpenseSlice,
+    notes: NoteSlice,
+    theme: ThemeSlice
 });
 
 const persistConfig = {

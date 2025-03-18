@@ -1,9 +1,9 @@
 import { createSlice , PayloadAction } from "@reduxjs/toolkit";
 
 export interface IUser{
-    name:String;
-    email:String;
-    password:String;
+    name?:String;
+    email?:String;
+    password?:String;
     isAuthenticated?: boolean;
 }
 

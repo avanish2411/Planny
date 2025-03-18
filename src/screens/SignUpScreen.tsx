@@ -6,6 +6,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
 import { setUser } from '../redux/slices/UserSlice';
 import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 type SignUpScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'SignUp'>;
 
 const SignUpScreen = () => {
@@ -53,25 +55,25 @@ const SignUpScreen = () => {
     outputRange: ['0deg', '360deg'],
   });
 
-  const handleSignUp = () => {
-    if (name.length > 0 && name.trim() && email.length > 0 && email.trim() && confirmPassword.length > 0 && confirmPassword.trim() && password.length > 0 && password.trim()) {
-      if (password === confirmPassword) {
-        dispatch(setUser({
-          name,
-          email,
-          password,
-          isAuthenticated: true
-        }));
-        setName('');
-        setEmail('');
-        setConfirmPassword('');
-        setPassword('');
-        navigation.navigate('MainTabs');
-      } else {
-        Alert.alert('Error', 'Passwords do not match');
-      }
-    } else {
-      Alert.alert('Error', 'Please fill in all fields');
+  const handleSignUp = async () => {
+    if (!name.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+      return Alert.alert('Error', 'Please fill in all fields');
+    }
+    if (password !== confirmPassword) {
+      return Alert.alert('Error', 'Passwords do not match');
+    }
+    try {
+      const userData = { name, email, isAuthenticated: true };
+      await AsyncStorage.setItem('userData', JSON.stringify(userData));
+      dispatch(setUser(userData));
+      setName('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      navigation.navigate('SignIn');
+    } catch (error) {
+      console.error('Sign-up error:', error);
+      Alert.alert('Error', 'Something went wrong. Please try again.');
     }
   };
 

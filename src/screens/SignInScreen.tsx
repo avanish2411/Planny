@@ -36,35 +36,29 @@ const SignInScreen = () => {
   }, []);
 
   const toMainPage = async () => {
-    if (email.length > 0 && email.trim() && password.length > 0 && password.trim()) {
+    if (email.trim() && password.trim()) {
       try {
-        // Get stored user data from AsyncStorage
         const storedUserData = await AsyncStorage.getItem('userData');
         if (storedUserData) {
           const userData = JSON.parse(storedUserData);
-
-          // Check if email and password match
           if (userData.email === email && userData.password === password) {
-            // Update user authentication status in Redux
-            dispatch(setUser({
-              ...userData,
-              isAuthenticated: true
-            }));
-
-            // Navigate to main app
+            dispatch(setUser({ ...userData, isAuthenticated: true }));
             navigation.navigate('MainTabs');
           } else {
             Alert.alert('Error', 'Invalid email or password');
           }
         } else {
-          Alert.alert('Error', 'No user found');
+          Alert.alert('Error', 'No user found. Please sign up.');
         }
       } catch (error) {
         Alert.alert('Error', 'Failed to sign in');
         console.error(error);
       }
+    } else {
+      Alert.alert('Error', 'Please enter email and password');
     }
-  }
+  };
+  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{

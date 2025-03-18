@@ -1,32 +1,29 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { StyleSheet, ScrollView, View } from 'react-native';
+import React from 'react';
+import AddTodoList from '../components/AddTodoList';
+import AddExpenseList from '../components/AddExpenseList';
+import AddNotes from '../components/AddNotes';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Home = () => {
+  const insets = useSafeAreaInsets();
+
+  const screens = [<AddTodoList />, <AddExpenseList />, <AddNotes />];
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Home Screen</Text>
-      </View>
-    </SafeAreaView>
-  )
-}
+    <ScrollView contentContainerStyle={[styles.container, { paddingTop: insets.top }]}>
+      {screens.map((Component, index) => (
+        <View key={index}>{Component}</View>
+      ))}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: 'white',
   },
-  content: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-})
+});
 
-export default Home
+export default Home;

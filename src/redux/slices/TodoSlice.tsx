@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ITodo {
     task: String;
-    isompleted: boolean;
+    isCompleted: boolean;
 }
 
 interface ITodoState {
