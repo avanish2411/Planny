@@ -9,10 +9,9 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../navigation/RootNavigation'
 import { Divider, Switch } from 'react-native-paper'
-import { clearUser, setUser } from '../redux/slices/UserSlice'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { setUser } from '../redux/slices/UserSlice'
 
-type AboutScreenNavigationProp = StackNavigationProp<RootStackParamList, 'EditDetails' | 'AuthStack'>
+type AboutScreenNavigationProp = StackNavigationProp<RootStackParamList, 'EditDetails'>
 
 const About = () => {
   const navigation = useNavigation<AboutScreenNavigationProp>()
@@ -20,7 +19,7 @@ const About = () => {
   const user = useSelector((state: RootState) => state.users.user)
   const [isDarkMode, setIsDarkMode] = React.useState(false)
   const toggleTheme = () => setIsDarkMode(!isDarkMode)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const openXAccount = () => {
     const xUsername = 'IamAvanish24'
@@ -32,23 +31,23 @@ const About = () => {
     const ProfileUrl = `https://discord.com/invite/${Username}`
     Linking.openURL(ProfileUrl).catch(err => console.error('Error opening X profile:', err))
   }
+
   const SignOut = async () => {
     try {
-      await AsyncStorage.removeItem('persist:root');
-      dispatch(clearUser());
-      navigation.navigate('AuthStack')
+      dispatch(setUser({
+        isAuthenticated: false
+      }))
     } catch (error) {
       console.error('Error clearing AsyncStorage:', error);
     }
   };
-
+  
   const menuItems = [
     { title: 'Theme', icon: 'theme-light-dark', hasSwitch: true },
     { title: 'Join on X', icon: 'twitter', action: openXAccount },
     { title: 'Join on Discord ', icon: 'discord', action: openDiscordAccount },
     { title: 'Contact Support via Email', icon: 'email-outline', action: () => console.log('Email pressed') },
   ]
-
   return (
     <ScrollView style={{ flex: 1, }}>
       <View style={{ alignItems: 'center', marginTop: insets.top + 50, paddingHorizontal: 16 }}>
@@ -78,7 +77,7 @@ const About = () => {
             paddingHorizontal: 20,
             paddingVertical: 8,
             borderRadius: 20,
-            backgroundColor: '#4DA6FF'  
+            backgroundColor: '#4DA6FF'
           }}
           onPress={() => navigation.navigate('EditDetails')}
         >
@@ -135,7 +134,7 @@ const About = () => {
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: 24,
-          backgroundColor:'#4DA6FF'
+          backgroundColor: '#4DA6FF'
         }}
         onPress={() => SignOut()}
       >

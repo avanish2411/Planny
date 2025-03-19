@@ -4,9 +4,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
-import { setUser } from '../redux/slices/UserSlice';
+import { clearUser, setUser } from '../redux/slices/UserSlice';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { clearExpense, deleteExpense } from '../redux/slices/ExpenseSlice';
+import { clearTodo } from '../redux/slices/TodoSlice';
 
 type SignUpScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'SignUp'>;
 
@@ -62,18 +64,29 @@ const SignUpScreen = () => {
     if (password !== confirmPassword) {
       return Alert.alert('Error', 'Passwords do not match');
     }
+
     try {
-      const userData = { name, email, isAuthenticated: true };
+      await AsyncStorage.removeItem('userData');
+      await AsyncStorage.clear();
+      dispatch(clearUser());
+      dispatch(clearExpense());
+      dispatch(clearTodo())
+      const userData = {
+        name,
+        email,
+        password,
+        isAuthenticated: true
+      };
       await AsyncStorage.setItem('userData', JSON.stringify(userData));
       dispatch(setUser(userData));
       setName('');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
-      navigation.navigate('SignIn');
+      navigation.navigate('MainTabs')
     } catch (error) {
       console.error('Sign-up error:', error);
-      Alert.alert('Error', 'Something went wrong. Please try again.');
+      Alert.alert('Error', 'Something went wrong during sign-up. Please try again.');
     }
   };
 

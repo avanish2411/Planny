@@ -83,7 +83,7 @@ const EditDetails = () => {
                             label="Password"
                             placeholderTextColor='#999'
                             secureTextEntry={!showPassword}
-                            right={<TextInput.Icon icon="eye" onPress={()=>setShowPassword(!showPassword)}/>}
+                            right={<TextInput.Icon icon="eye" onPress={() => setShowPassword(!showPassword)} />}
                         />
                     </View>
 

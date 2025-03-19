@@ -52,13 +52,12 @@ const SignInScreen = () => {
         }
       } catch (error) {
         Alert.alert('Error', 'Failed to sign in');
-        console.error(error);
       }
     } else {
       Alert.alert('Error', 'Please enter email and password');
     }
+
   };
-  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{
