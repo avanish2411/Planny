@@ -99,7 +99,7 @@ const AddExpenseList = () => {
             </View>
         ) : (
             <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 15 }}>
-                <Text style={{ fontWeight: '500', fontSize: 16, color: '#bbb' }}>No expenses added</Text>
+                <Text style={{ fontWeight: '500', fontSize: 16, color: '#777'}}>No expenses added</Text>
             </View>
         )}
     </View>
