@@ -16,7 +16,7 @@ const CustomTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => 
             height: 60,
             backgroundColor: '#fff',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
             alignItems: 'center',
             paddingHorizontal: 25,
             marginBottom: insets.bottom

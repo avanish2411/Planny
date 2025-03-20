@@ -45,21 +45,21 @@ const AddExpenseList = () => {
 
         {showInput && (
             <View style={{ marginVertical: 10 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#333', padding: 10, borderRadius: 10 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', padding: 10, borderRadius: 10 }}>
                     <TextInput
                         value={expenseName}
                         onChangeText={setExpenseName}
                         placeholder='Expense Name'
                         placeholderTextColor={'#555' }
-                        style={{ flex: 1, fontSize: 16, color:'#fff'}}
+                        style={{ flex: 1, fontSize: 16, color:'#000'}}
                     />
                     <TextInput
                         value={expenseCost}
                         onChangeText={setExpenseCost}
                         placeholder='Cost'
                         keyboardType='numeric'
-                        placeholderTextColor={ '#aaa'}
-                        style={{ flex: 1, fontSize: 16, color:  '#fff', marginLeft: 10 }}
+                        placeholderTextColor={ '#555'}
+                        style={{ flex: 1, fontSize: 16, color:  '#000', marginLeft: 10 }}
                     />
                     <TouchableOpacity onPress={handleAddExpense} style={{ backgroundColor: '#28A745', paddingVertical: 10, paddingHorizontal: 15, borderRadius: 8 }}>
                         <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>{editIndex !== null ? 'Update' : 'Add'}</Text>
@@ -78,8 +78,10 @@ const AddExpenseList = () => {
                     scrollEnabled={false}
                     renderItem={({ item, index }) => (
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#fff', padding: 12, marginTop: 10, borderRadius: 10 }}>
-                            <Text style={{ color:'#000', fontSize: 18 }}>{item.name}</Text>
-                            <Text style={{ color: '#000', fontSize: 18, fontWeight: '600' }}>₹{item.amount}</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 ,justifyContent:'space-between',width:'70%'}}>
+                                <Text style={{ color:'#000', fontSize: 18 }}>{item.name}</Text>
+                                <Text style={{ color: '#000', fontSize: 18, fontWeight: '600' ,}}>₹{item.amount}</Text>
+                            </View>
                             <View style={{ flexDirection: 'row', gap: 5 }}>
                                 <TouchableOpacity onPress={() => { setExpenseName(item.name.toString()); setExpenseCost(item.amount.toString()); setEditIndex(index); setShowInput(true); }} style={{ backgroundColor: '#FFC107', padding: 8, borderRadius: 8 }}>
                                     <Edit name='edit' size={22} color='white' />

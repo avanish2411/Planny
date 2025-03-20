@@ -43,10 +43,10 @@ const About = () => {
   };
   
   const menuItems = [
-    { title: 'Theme', icon: 'theme-light-dark', hasSwitch: true },
+    // { title: 'Theme', icon: 'theme-light-dark', hasSwitch: true },
     { title: 'Join on X', icon: 'twitter', action: openXAccount },
-    { title: 'Join on Discord ', icon: 'discord', action: openDiscordAccount },
-    { title: 'Contact Support via Email', icon: 'email-outline', action: () => console.log('Email pressed') },
+    { title: 'Join on Discord', icon: 'discord', action: openDiscordAccount },
+    { title: 'Support me', icon: 'email-outline', action: () => console.log('Email pressed') },
   ]
   return (
     <ScrollView style={{ flex: 1, }}>
@@ -64,10 +64,10 @@ const About = () => {
           />
         </View>
         <View style={{ alignItems: 'center', marginTop: 12 }}>
-          <Text style={{ fontSize: 24, fontWeight: '600' }}>
+          <Text style={{ fontSize: 24, fontWeight: '600',textAlign:'center' }}>
             {user?.name || 'User Name'}
           </Text>
-          <Text style={{ fontSize: 16, marginTop: 4, }}>
+          <Text style={{ fontSize: 16, marginTop: 4,textAlign:'center' }}>
             {user?.email || 'user@example.com'}
           </Text>
         </View>
@@ -81,7 +81,7 @@ const About = () => {
           }}
           onPress={() => navigation.navigate('EditDetails')}
         >
-          <Text style={{ color: 'white', fontWeight: '500', fontSize: 16 }}>Edit Profile</Text>
+          <Text style={{ color: 'white', fontWeight: '500', fontSize: 16,textAlign:'center' }}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
 
@@ -103,21 +103,21 @@ const About = () => {
                 width: '100%',
                 backgroundColor: '#fff'
               }}
-              disabled={item.hasSwitch}
+              // disabled={item.hasSwitch}
               onPress={item.action}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <MaterialIcon name={item.icon} size={24} style={{ marginRight: 16 }} />
                 <Text style={{ fontSize: 16, }}>{item.title}</Text>
               </View>
-              {item.hasSwitch ? (
+              {/* {item.hasSwitch ? (
                 <Switch
                   value={isDarkMode}
                   onValueChange={toggleTheme}
                 />
               ) : (
                 <MaterialIcon name="chevron-right" size={24} />
-              )}
+              )} */}
             </TouchableOpacity>
             {index < menuItems.length - 1 && (
               <Divider style={{ height: 1, marginLeft: 56, }} />
@@ -148,5 +148,4 @@ const About = () => {
     </ScrollView>
   )
 }
-
-export default About
+export default About;
