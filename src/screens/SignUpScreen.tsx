@@ -1,4 +1,4 @@
-import { View, Text, Animated, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback, Alert, KeyboardAvoidingView } from 'react-native';
+import { View, Text, Animated, TouchableOpacity, Keyboard, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -7,8 +7,11 @@ import { AuthStackParamList } from '../navigation/AuthStack';
 import { clearUser, setUser } from '../redux/slices/UserSlice';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { clearExpense, deleteExpense } from '../redux/slices/ExpenseSlice';
+import { clearExpense } from '../redux/slices/ExpenseSlice';
 import { clearTodo } from '../redux/slices/TodoSlice';
+import { TextInput, MD3LightTheme } from 'react-native-paper';
+import { Platform } from 'react-native';
+
 
 type SignUpScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'SignUp'>;
 
@@ -92,178 +95,163 @@ const SignUpScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView style={{
-        flex: 1,
-        backgroundColor: '#ffffff',
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-        paddingLeft: insets.left,
-        paddingRight: insets.right,
-      }}>
-        <View style={{
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{
           flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingHorizontal: 20,
-        }}>
-          {/* Logo */}
-          <Animated.View style={{
-            marginBottom: 40,
-            opacity: fadeAnim,
-            transform: [
-              { translateY },
-              { scale: scaleAnim },
-              { rotate: spin }
-            ],
+          backgroundColor: '#ffffff',
+        }}
+      >
+        <ScrollView 
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingTop: insets.top,
+            paddingBottom: insets.bottom,
+            paddingLeft: insets.left,
+            paddingRight: insets.right,
+          }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingHorizontal: 20,
           }}>
-            <View style={{
-              width: 80,
-              height: 80,
-              borderRadius: 20,
-              backgroundColor: '#007AFF',
-              justifyContent: 'center',
-              alignItems: 'center',
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.3,
-              shadowRadius: 4.65,
-              elevation: 8,
-            }}>
-              <Text style={{
-                fontSize: 36,
-                fontWeight: 'bold',
-                color: '#ffffff',
-              }}>P</Text>
-            </View>
-          </Animated.View>
-
-          {/* Title */}
-          <Animated.Text style={{
-            fontSize: 28,
-            fontWeight: 'bold',
-            color: '#333333',
-            marginBottom: 40,
-            opacity: fadeAnim,
-            transform: [{ translateY }],
-          }}>
-            Create Account
-          </Animated.Text>
-
-          {/* Form */}
-          <Animated.View style={{
-            width: '100%',
-            opacity: fadeAnim,
-            transform: [{ translateY }],
-          }}>
+            {/* Logo */}
             <Animated.View style={{
-              transform: [{ scale: scaleAnim }],
+              marginBottom: 40,
+              opacity: fadeAnim,
+              transform: [
+                { translateY },
+                { scale: scaleAnim },
+                { rotate: spin }
+              ],
             }}>
-              <TextInput
-                placeholder="Full Name"
-                value={name}
-                onChangeText={setName}
-                placeholderTextColor={'#aaa'}
-                style={{
-                  width: '100%',
-                  height: 50,
-                  backgroundColor: '#f5f5f5',
-                  borderRadius: 10,
-                  paddingHorizontal: 15,
-                  marginBottom: 15,
-                  fontSize: 16,
-                }}
-              />
-
-              <TextInput
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                placeholderTextColor={'#aaa'}
-                style={{
-                  width: '100%',
-                  height: 50,
-                  backgroundColor: '#f5f5f5',
-                  borderRadius: 10,
-                  paddingHorizontal: 15,
-                  marginBottom: 15,
-                  fontSize: 16,
-                }}
-              />
-
-              <TextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                placeholderTextColor={'#aaa'}
-                style={{
-                  width: '100%',
-                  height: 50,
-                  backgroundColor: '#f5f5f5',
-                  borderRadius: 10,
-                  paddingHorizontal: 15,
-                  marginBottom: 15,
-                  fontSize: 16,
-                }}
-              />
-
-              <TextInput
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                secureTextEntry
-                placeholderTextColor={'#aaa'}
-                style={{
-                  width: '100%',
-                  height: 50,
-                  backgroundColor: '#f5f5f5',
-                  borderRadius: 10,
-                  paddingHorizontal: 15,
-                  marginBottom: 20,
-                  fontSize: 16,
-                }}
-              />
-            </Animated.View>
-
-            <TouchableOpacity
-              style={{
-                width: '100%',
-                height: 50,
+              <View style={{
+                width: 80,
+                height: 80,
+                borderRadius: 20,
                 backgroundColor: '#007AFF',
-                borderRadius: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
                 shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.2,
-                shadowRadius: 3,
-                elevation: 3,
-              }}
-              onPress={handleSignUp}
-            >
-              <Text style={{
-                color: '#ffffff',
-                fontSize: 16,
-                fontWeight: '600',
-              }}>Sign Up</Text>
-            </TouchableOpacity>
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.3,
+                shadowRadius: 4.65,
+                elevation: 8,
+              }}>
+                <Text style={{
+                  fontSize: 36,
+                  fontWeight: 'bold',
+                  color: '#ffffff',
+                }}>P</Text>
+              </View>
+            </Animated.View>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate('SignIn')}
-              style={{
-                marginTop: 20,
-                alignItems: 'center',
-              }}
-            >
-              <Text style={{
-                color: '#007AFF',
-                fontSize: 14,
-              }}>Already have an account? Sign In</Text>
-            </TouchableOpacity>
-          </Animated.View>
-        </View>
+            {/* Title */}
+            <Animated.Text style={{
+              fontSize: 28,
+              fontWeight: 'bold',
+              color: '#333333',
+              marginBottom: 40,
+              opacity: fadeAnim,
+              transform: [{ translateY }],
+            }}>
+              Create Account
+            </Animated.Text>
+
+            {/* Form */}
+            <Animated.View style={{
+              width: '100%',
+              opacity: fadeAnim,
+              transform: [{ translateY }],
+            }}>
+              <Animated.View style={{
+                transform: [{ scale: scaleAnim }],
+              }}>
+                <TextInput
+                  value={name}
+                  onChangeText={setName}
+                  mode="outlined"
+                  label="Name"
+                  theme={MD3LightTheme}
+                  placeholderTextColor={'#aaa'}
+                  style={{ marginBottom: 10 }}
+                />
+
+
+                <TextInput
+                  value={email}
+                  onChangeText={setEmail}
+                  mode="outlined"
+                  label="Email"
+                  theme={MD3LightTheme}
+                  placeholderTextColor={'#aaa'}
+                  style={{ marginBottom: 10 }}
+                />
+
+                <TextInput
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                  mode="outlined"
+                  label="Password"
+                  theme={MD3LightTheme}
+                  placeholderTextColor={'#aaa'}
+                  style={{ marginBottom: 10 }}
+                />
+
+                <TextInput
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  secureTextEntry
+                  mode="outlined"
+                  label="Confirm Password"
+                  theme={MD3LightTheme}
+                  placeholderTextColor={'#aaa'}
+                  style={{ marginBottom: 10 }}
+                />
+              </Animated.View>
+
+              <TouchableOpacity
+                style={{
+                  width: '100%',
+                  height: 50,
+                  backgroundColor: '#007AFF',
+                  borderRadius: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  shadowColor: '#000',
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 3,
+                  elevation: 3,
+                }}
+                onPress={handleSignUp}
+              >
+                <Text style={{
+                  color: '#ffffff',
+                  fontSize: 16,
+                  fontWeight: '600',
+                }}>Sign Up</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => navigation.navigate('SignIn')}
+                style={{
+                  marginTop: 20,
+                  alignItems: 'center',
+                }}
+              >
+                <Text style={{
+                  color: '#007AFF',
+                  fontSize: 14,
+                }}>Already have an account? Sign In</Text>
+              </TouchableOpacity>
+            </Animated.View>
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );

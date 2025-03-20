@@ -1,10 +1,10 @@
-import { View, Text, KeyboardAvoidingView, TouchableOpacity, Platform } from 'react-native'
+import { View, Text, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/myStore'
 import { setUser } from '../redux/slices/UserSlice'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { TextInput } from 'react-native-paper';
+import { MD3LightTheme, TextInput } from 'react-native-paper';
 
 const EditDetails = () => {
     const user = useSelector((state: RootState) => state.users.user)
@@ -68,6 +68,7 @@ const EditDetails = () => {
                             mode="outlined"
                             label="Name"
                             placeholderTextColor='#999'
+                            theme={MD3LightTheme}
                         />
                         <TextInput
                             value={email}
@@ -75,6 +76,7 @@ const EditDetails = () => {
                             editable={false}
                             mode="outlined"
                             label="Email"
+                            theme={MD3LightTheme}
                         />
                         <TextInput
                             value={password}
@@ -83,6 +85,7 @@ const EditDetails = () => {
                             label="Password"
                             placeholderTextColor='#999'
                             secureTextEntry={!showPassword}
+                            theme={MD3LightTheme}
                             right={<TextInput.Icon icon="eye" onPress={() => setShowPassword(!showPassword)} />}
                         />
                     </View>

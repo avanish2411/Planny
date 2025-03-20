@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addNote, updateNote } from '../redux/slices/NoteSlice';
+import { black } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 const AddNotes = () => {
     const [note, setNote] = useState('');
@@ -37,6 +38,7 @@ const AddNotes = () => {
             <View>
                 <TextInput
                     placeholder='Write here'
+                    placeholderTextColor={'#000'}
                     multiline
                     value={note}
                     onChangeText={setNote}
