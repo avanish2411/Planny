@@ -124,6 +124,7 @@ const SignInScreen = () => {
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
+              placeholderTextColor={'#aaa'}
               autoCapitalize="none"
               style={{
                 width: '100%',
@@ -140,6 +141,7 @@ const SignInScreen = () => {
               placeholder="Password"
               value={password}
               onChangeText={setPassword}
+              placeholderTextColor={'#aaa'}
               secureTextEntry
               style={{
                 width: '100%',

@@ -162,6 +162,7 @@ const SignUpScreen = () => {
                 placeholder="Full Name"
                 value={name}
                 onChangeText={setName}
+                placeholderTextColor={'#aaa'}
                 style={{
                   width: '100%',
                   height: 50,
@@ -179,6 +180,7 @@ const SignUpScreen = () => {
                 onChangeText={setEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                placeholderTextColor={'#aaa'}
                 style={{
                   width: '100%',
                   height: 50,
@@ -195,6 +197,7 @@ const SignUpScreen = () => {
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
+                placeholderTextColor={'#aaa'}
                 style={{
                   width: '100%',
                   height: 50,
@@ -211,6 +214,7 @@ const SignUpScreen = () => {
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 secureTextEntry
+                placeholderTextColor={'#aaa'}
                 style={{
                   width: '100%',
                   height: 50,
