@@ -15,7 +15,7 @@ Welcome to **Planny**, your go-to app for staying organized, tracking expenses, 
 ✅ **Modern UI/UX** -
    - Clean and user-friendly interface powered by `react-native-paper`  
    - Subtle animations for a sleek experience  
-   - **Dark theme optimized** (Light theme support coming soon!)  
+   - **Light theme optimized** (dark theme support coming soon!)  
 ✅ **Android Support** -  Tested(for android devices only). 
 
 ---
