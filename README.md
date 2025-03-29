@@ -10,13 +10,13 @@ Welcome to **Planny**, your go-to app for staying organized, tracking expenses, 
 ✅ **Manage Todos** - Add, edit, and remove your daily tasks  
 ✅ **Track Expenses** - Keep an eye on your spending  
 ✅ **Save Notes** - Jot down important reminders  
-✅ **Local Storage** - No third-party API or database; data is stored securely using `Async-Storage`  
+✅ **Local Storage** - No third-party API or database; data is stored locally and securely using `Async-Storage`  
 ✅ **State Management** - Smooth data flow with `Redux` and `Redux Toolkit`  
 ✅ **Modern UI/UX** -
    - Clean and user-friendly interface powered by `react-native-paper`  
    - Subtle animations for a sleek experience  
-   - **Dark theme optimized** (Light theme support coming soon!)  
-✅ **Android Support** - Fully tested and runs on Android devices only  
+   - **Light theme optimized** (dark theme support coming soon!)  
+✅ **Android Support** -  Tested(for android devices only). 
 
 ---
 
